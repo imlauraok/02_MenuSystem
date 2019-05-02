@@ -3,7 +3,7 @@
 #include "PuzzlePlatformsGameInstance.h"
 #include "Engine/Engine.h"
 #include "UObject/ConstructorHelpers.h"
-#include"Blueprint/UserWidget.h"
+#include "Blueprint/UserWidget.h"
 #include "PlatformTrigger.h"
 
 UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance(const FObjectInitializer & ObjectInitializer)
@@ -17,6 +17,16 @@ UPuzzlePlatformsGameInstance::UPuzzlePlatformsGameInstance(const FObjectInitiali
 void UPuzzlePlatformsGameInstance::Init()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Found class %s"), *MenuClass->GetName());
+}
+
+void UPuzzlePlatformsGameInstance::LoadMenu()
+{
+	if (!ensure(MenuClass != nullptr)) return;
+
+	UUserWidget* Menu = CreateWidget<UUserWidget>(this, MenuClass);
+	if (!ensure(Menu != nullptr)) return;
+
+	Menu->AddToViewport();
 }
 
 void UPuzzlePlatformsGameInstance::Host()
